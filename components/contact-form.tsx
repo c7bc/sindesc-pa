@@ -315,7 +315,7 @@ export default function ContactForm({ contactInfo, siteId }: ContactFormProps) {
           </div>
           <h3 className="font-semibold text-primary mb-2">Endereço</h3>
           <p className="text-sm text-secondary">
-            {contactInfo?.address || "Rua dos Radialistas, 123\nBelém - PA"}
+            {contactInfo?.address || "Rua do SINDESC, 123\nBelém - PA"}
           </p>
         </div>
       </div>

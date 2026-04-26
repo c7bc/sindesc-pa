@@ -9,17 +9,17 @@ interface HeroProps {
 
 // Default content for fallback
 const defaultContent: HeroContent = {
-  badge: "Unidos pela Voz!",
-  badgeText: "Junte-se à força dos Radialistas",
-  title: "Fortaleça sua voz. Fortaleça sua categoria.",
+  badge: "Unidos pelo Cuidado!",
+  badgeText: "Junte-se à força do SINDESC",
+  title: "Fortaleça sua categoria. Cuide de quem cuida.",
   description:
-    "O Sindicato dos Radialistas é mais do que uma entidade: é o eco da sua dignidade profissional. Ao se sindicalizar, você defende seus direitos, amplia sua representatividade e fortalece quem dá vida ao som do Brasil.",
+    "O SINDESC representa os profissionais de enfermagem e saúde do estado do Pará. Ao se sindicalizar, você defende seus direitos, amplia sua representatividade e fortalece quem está na linha de frente do cuidado.",
   primaryButtonText: "Ver benefícios",
   primaryButtonHref: "/servicos",
   secondaryButtonText: "Sindicalize-se agora",
   secondaryButtonHref: "/sindicalize-se",
   imageUrl: "/hero.jpeg",
-  imageAlt: "Radialista em estúdio de rádio",
+  imageAlt: "Profissional de enfermagem",
 };
 
 export default function Hero({ content }: HeroProps) {
@@ -33,7 +33,7 @@ export default function Hero({ content }: HeroProps) {
             <BadgeLink
               href={data.secondaryButtonHref}
               label={data.badge || "Unidos pela Voz!"}
-              text={data.badgeText || "Junte-se à força dos Radialistas"}
+              text={data.badgeText || "Junte-se à força do SINDESC"}
             />
 
             <h1 className="mt-4 text-display-md font-semibold text-primary md:text-display-lg lg:text-display-xl">

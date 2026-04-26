@@ -146,7 +146,7 @@ export default function SindicalizacaoForm({ siteId }: SindicalizacaoFormProps) 
           Faça parte do Sindicato
         </h1>
         <p className="text-lg md:text-xl text-secondary">
-          Una-se a milhares de profissionais de enfermagem e saúde que já contam com a força e proteção do sindicato.
+          Una-se a milhares de profissionais da enfermagem que já contam com a força e proteção do sindicato.
           Juntos somos mais fortes na defesa dos nossos direitos.
         </p>
       </div>
@@ -249,7 +249,7 @@ export default function SindicalizacaoForm({ siteId }: SindicalizacaoFormProps) 
           {/* Empresa/Veículo */}
           <div>
             <label htmlFor="empresaVeiculo" className="block text-sm font-medium text-secondary mb-2">
-              Hospital/Instituição de Saúde onde trabalha
+              Empresa/Veículo onde trabalha
             </label>
             <input
               type="text"
@@ -258,7 +258,7 @@ export default function SindicalizacaoForm({ siteId }: SindicalizacaoFormProps) 
               value={formData.empresaVeiculo}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-primary rounded-lg focus:outline-focus-ring focus:border-brand-600 transition"
-              placeholder="Nome do hospital ou instituição de saúde"
+              placeholder="Nome da empresa ou veículo"
             />
           </div>
 
@@ -274,7 +274,7 @@ export default function SindicalizacaoForm({ siteId }: SindicalizacaoFormProps) 
               value={formData.cargoFuncao}
               onChange={handleChange}
               className="w-full px-4 py-3 border border-primary rounded-lg focus:outline-focus-ring focus:border-brand-600 transition"
-              placeholder="Ex: Enfermeiro, Técnico de Enfermagem, Auxiliar"
+              placeholder="Ex: Locutor, Repórter, Produtor"
             />
           </div>
 

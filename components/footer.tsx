@@ -1,12 +1,20 @@
-import type { FooterContent } from "@/types/payload";
+import Image from "next/image";
+import type { FooterContent, NavItem } from "@/types/payload";
 
 interface FooterProps {
   content?: FooterContent;
+  navItems?: NavItem[];
+  contact?: {
+    phone?: string;
+    email?: string;
+    address?: string;
+    whatsapp?: string;
+    workingHours?: string;
+  };
 }
 
-// Default content for fallback
 const defaultContent: FooterContent = {
-  description: "Representando e defendendo os direitos dos profissionais de enfermagem e saúde com força e dedicação.",
+  description: "Representando e defendendo os direitos dos profissionais de enfermagem e saúde do estado do Pará.",
   navItems: [
     { label: "Início", href: "/" },
     { label: "Sindicato", href: "/sindicato" },
@@ -23,143 +31,116 @@ const defaultContent: FooterContent = {
   },
 };
 
-export default function Footer({ content }: FooterProps) {
+export default function Footer({ content, navItems, contact }: FooterProps) {
   const data = content || defaultContent;
+  const links = navItems || data.navItems;
 
   return (
-    <footer className="bg-brand-section py-12 md:pt-16">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="flex flex-col justify-between gap-x-8 gap-y-12 lg:flex-row lg:items-start">
-          <div className="flex flex-col gap-6 md:max-w-sm">
-            {/* Logo do Sindicato */}
-            <div className="flex h-8 w-max items-center justify-start overflow-visible">
-              <a className="flex items-center gap-2 text-white" href="/">
-                <svg width="31" height="55" viewBox="0 0 900 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="white" d="M317.328 912.105L696.747 913.141C696.924 920.404 696.815 928.052 696.826 935.348C657.632 935.85 618.435 936.057 579.237 935.967L345.245 936.039C295.499 936.287 245.751 936.092 196.009 935.455C195.617 927.403 195.788 920.705 196.029 912.691C235.237 911.373 277.628 912.495 317.328 912.105Z"/>
-                  <path fill="white" d="M677.647 703.525C683.912 703.285 690.585 703.295 696.887 703.194L696.879 725.941C676.956 725.267 653.2 725.99 633.154 726.186L542.08 726.527L218.061 726.444L200.489 726.376C199.55 722.322 198.318 718.164 197.192 714.145C198.331 711.183 199.448 707.033 200.388 703.916C240.941 703.092 281.916 704.087 322.501 703.794C440.591 702.941 559.68 705.251 677.647 703.525Z"/>
-                  <path fill="white" d="M196.406 948.821C212.939 947.667 239.466 948.405 256.445 948.386L371.203 948.399L696.72 948.519C696.865 953.661 697.274 965.558 696.46 970.102L695.218 970.742C650.463 972.046 599.991 970.457 554.657 970.555L195.834 971.05C195.589 965.772 194.868 953.745 196.406 948.821Z"/>
-                  <path fill="white" d="M196.061 669.128C227.768 669.794 261.636 669.076 293.522 669.073L469.485 669.132L612.733 668.986C640.471 668.984 669.105 669.372 696.774 668.723C697.385 677.17 697.43 681.985 696.954 690.435L195.954 691.189C195.711 683.836 195.746 676.477 196.061 669.128Z"/>
-                  <path fill="white" d="M406.133 746.986L449.976 747.04C453.594 756.717 458.157 765.953 461.907 775.528C462.921 778.118 462.96 786.915 463.163 790.222C464.481 791.156 464.951 791.558 466.12 792.673C467.559 803.191 467.012 834.205 467.096 846.265C465.71 848.053 464.353 849.863 463.025 851.694L463.298 863.004C460.8 866.445 456.625 876.469 454.683 880.819C452.387 885.232 451.962 887.289 450.743 892.031L406.034 892.065C405.87 886.013 405.95 879.339 406.094 873.282C407.088 831.416 404.845 788.73 406.133 746.986ZM428.088 861.526C431.313 861.559 437.267 861.932 440.072 860.919L440.618 859.179C442.701 851.745 445.191 850.774 445.382 842.49C445.721 827.805 445.487 813.054 445.374 798.381C439.308 791.898 441.69 787.944 440.728 778.945L428.836 778.371C426.56 786.737 427.069 850.824 428.088 861.526Z"/>
-                  <path fill="white" d="M326.524 747.128C332.419 747.306 337.507 747.083 343.397 746.82C347.789 761.237 352.322 761.409 352.309 778.748C358.938 787.818 360.306 795.279 360.164 805.916C363.666 810.085 365.118 815.809 367.444 817.245L368.835 816.495C371.239 807.606 370.1 759.882 370.303 746.95C375.217 747.329 382.43 747.162 387.521 747.183C388.487 777.312 386.924 810.382 387.543 840.903C387.718 849.521 388.052 885.969 387.211 891.914L370.568 891.571C369.674 886.291 365.579 879.335 363.553 873.853C361.873 869.307 362.632 862.997 361.872 861.031C356.98 848.377 354.239 848.371 353.852 834.219C351.353 831.1 349.206 825.217 347.464 821.312L346.677 821.326C343.317 825.587 344.253 843.929 344.258 850.292C344.358 864.278 344.291 878.265 344.058 892.25L326.615 892.311C326.097 845.477 325.913 793.983 326.524 747.128Z"/>
-                  <path fill="white" d="M480.786 747.474C499.974 747.676 519.164 747.71 538.352 747.575C538.582 757.852 538.374 768.64 538.319 778.964C526.636 778.967 514.954 778.793 503.276 778.442C502.896 785.977 502.942 792 503.143 799.559C513.02 799.205 524.381 799.421 534.367 799.388C534.577 809.852 534.368 820.715 534.302 831.215L503.206 831.058C502.495 841.903 502.266 849.123 503.194 859.93C506.405 861.707 532.788 860.811 538.015 860.746C538.413 870.572 538.164 882.336 538.198 892.304L481.288 892.164C480.046 876.698 480.94 845.697 480.974 829.48C481.029 802.792 480.042 773.82 480.786 747.474Z"/>
-                  <path fill="white" d="M560.621 747.568L593.338 747.505C595.14 754.165 602.377 770.823 606.023 776.703C606.126 780.344 605.603 784.335 605.229 787.988C597.706 788.542 591.866 788.373 584.351 788.044L582.694 778.936L571.234 778.864C570.155 786.357 570.419 792.606 571.042 800.07L585.645 799.763L586.843 809.067L597.431 809.309C597.977 811.998 598.208 813.405 599.282 816.001C600.965 817.865 601.718 817.928 604.107 818.378L604.828 818.508C606.123 821.744 605.977 828.42 606.478 832.65C610.76 837.393 609.441 839.793 610.096 845.61C611.8 860.759 606.808 869.578 600.869 882.894C598.644 882.96 598.3 883.039 596.193 883.765C593.993 885.607 593.956 889.149 593.556 892.125L582.422 892.056L560.634 891.867C560.342 888.947 560.019 886.031 559.667 883.117C557.282 882.525 556.048 882.56 553.635 882.467C549.983 878.95 546.658 856.976 544.079 851.249C543.766 850.554 544.397 844.987 544.539 843.778C551.896 844.05 558.562 844.027 565.929 843.914C566.784 851.058 570.899 853.835 571.289 861.121L582.666 861.103C583.407 856.781 587.409 848.82 587.273 846.24C587.129 843.521 583.637 835.725 583.255 830.983L568.162 831.272L567.022 821.864L556.733 821.757C555.432 813.225 552.001 809.331 549.246 802.037C547.04 796.198 547.803 782.361 547.883 775.553C551.335 771.838 559.887 752.631 560.621 747.568Z"/>
-                  <path fill="white" d="M223.884 747.593L256.015 747.526C261.856 763.82 269.74 770.928 269.171 787.241C262.049 787.2 254.928 787.059 247.809 786.819L246.513 778.354L234.212 778.381C233.062 785 233.409 793.703 233.601 800.416C238.379 800.185 243.951 800.244 248.791 800.187C249.217 803.062 250.003 806.44 250.601 809.333C253.814 808.82 257.838 808.749 261.156 808.598C261.595 811.58 261.364 815.275 262.8 817.441C265.819 816.469 265.936 816.333 268.415 818.098C268.613 820.132 268.86 826.138 269.531 827.607C275.515 840.725 273.804 873.575 262.293 883.31C260.556 883.115 260.359 883.045 258.672 883.396C257 885.555 256.894 889.221 256.556 892.062L247.852 892.018L223.63 892.029C223.46 889.126 223.573 886.513 222.363 883.924C219.481 882.527 219.562 883.085 215.88 883.384C212.751 872.057 211.429 873.164 211.614 860.039L207.688 854.463L207.878 842.945C214.876 842.643 221.634 842.922 228.621 843.144C229.441 852.392 233.273 852.346 234.215 861.801L246.264 862.087C246.518 859.665 246.913 856.157 248.135 854.131C254.262 843.976 247.293 840.146 246.536 830.525L231.52 830.046L230.454 821.287L219.85 821.498C217.915 814.362 214.108 808.424 212.935 804.001C209.825 790.452 210.641 777.192 217.377 764.831C219.878 760.241 223.567 752.327 223.884 747.593Z"/>
-                  <path fill="white" d="M639.386 747.557L668.49 747.502C668.634 748.167 670.151 755.109 670.186 755.121C687.978 760.949 680.032 781.63 676.87 796.212L663.58 796.182C662.129 789.535 658.636 784.546 658.453 778.175L646.324 778.243C646.16 782.384 646.185 790.432 644.841 794.647C644.866 794.568 641.966 797.544 641.927 797.853C640.132 812.058 640.485 832.739 641.629 846.907C641.865 849.838 645.478 855.559 646.402 860.17L646.558 860.981C651.583 861.051 656.775 860.901 661.812 860.823C662.344 858.62 667.144 846.526 668.286 843.27L669.794 842.663C671.961 843.585 672.824 843.453 675.108 843.33L675.848 843.287C678.8 843.293 682.114 842.897 684.38 844.2C686.193 849.123 678.97 879.103 675.369 883.545C673.507 883.703 672.946 883.818 671.15 884.337C669.166 886.249 669.123 889.502 668.689 892.436L639.789 892.106C638.605 884.432 639.947 885.187 633.532 883.691C626.864 876.214 623.16 861.909 623.37 851.697L619.351 845.966C619.551 829.725 618.52 810.157 619.997 793.885C620.137 792.35 622.401 789.587 623.461 788.303C623.505 779.689 627.954 756.563 637.652 755.204C639.293 753.232 639.144 750.297 639.386 747.557Z"/>
-                  <path fill="white" d="M287.102 747.356L308.471 747.333C308.972 764.407 308.576 783.644 308.581 800.932L308.481 892.11L286.81 892.134C286.163 855.742 287.262 819.035 286.769 782.61C286.613 771.005 286.564 758.913 287.102 747.356Z"/>
-                </svg>
-                <div className="flex flex-col text-sm font-semibold">
-                  <span>SINDESC</span>
-                  <span>CASTANHAL - PA</span>
-                </div>
-              </a>
+    <footer className="bg-[#19232d] text-[#efefef]">
+      {/* Contact info */}
+      <div className="mx-auto max-w-7xl px-6 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Sede — esquerda */}
+          <div className="md:text-left">
+            <h4 className="text-sm font-bold uppercase mb-3 text-white">Sede Principal</h4>
+            <div className="text-sm text-gray-400 space-y-2">
+              {contact?.address && (
+                <p className="flex items-start gap-2">
+                  <svg className="size-4 mt-0.5 shrink-0 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  <span>{contact.address}</span>
+                </p>
+              )}
+              {contact?.workingHours && (
+                <p className="flex items-start gap-2">
+                  <svg className="size-4 mt-0.5 shrink-0 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span>{contact.workingHours}</span>
+                </p>
+              )}
+              {!contact?.address && <p>{data.description}</p>}
             </div>
-            <p className="text-md text-white">
-              {data.description}
-            </p>
           </div>
 
-          <nav>
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3 lg:grid-cols-[repeat(6,max-content)]">
-              {data.navItems.map((item, index) => (
+          {/* Contact — centro */}
+          <div className="md:text-center md:flex md:flex-col md:items-center">
+            <h4 className="text-sm font-bold uppercase mb-3 text-white">Contato</h4>
+            <div className="text-sm text-gray-400 space-y-2">
+              {contact?.phone && (
+                <p className="flex items-start gap-2 md:justify-center">
+                  <svg className="size-4 mt-0.5 shrink-0 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                  <span>{contact.phone}</span>
+                </p>
+              )}
+              {contact?.whatsapp && (
+                <p className="flex items-start gap-2">
+                  <svg className="size-4 mt-0.5 shrink-0 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  <a href={`https://wa.me/55${contact.whatsapp.replace(/\D/g, '')}`} className="hover:text-white transition">{contact.whatsapp}</a>
+                </p>
+              )}
+              {contact?.email && (
+                <p className="flex items-start gap-2">
+                  <svg className="size-4 mt-0.5 shrink-0 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  <a href={`mailto:${contact.email}`} className="hover:text-white transition">{contact.email}</a>
+                </p>
+              )}
+              {!contact?.phone && (
+                <a href="/contato" className="text-brand-400 hover:text-white transition">Fale Conosco →</a>
+              )}
+            </div>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h4 className="text-sm font-bold uppercase mb-3 text-white">Redes Sociais</h4>
+            <div className="flex gap-3">
+              {data.socialLinks.instagram && (
+                <a href={data.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                  <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+              )}
+              {data.socialLinks.facebook && (
+                <a href={data.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                  <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.642c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385c5.738-.9 10.126-5.864 10.126-11.854z"/></svg>
+                </a>
+              )}
+              {data.socialLinks.twitter && (
+                <a href={data.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition" aria-label="Twitter">
+                  <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                </a>
+              )}
+              {data.socialLinks.youtube && (
+                <a href={data.socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition" aria-label="YouTube">
+                  <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Nav bar + copyright */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-6">
+          <nav className="mb-4">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              {links.map((item, index) => (
                 <li key={index}>
-                  <a
-                    className="group relative inline-flex h-max cursor-pointer items-center whitespace-nowrap outline-brand transition duration-100 ease-linear before:absolute focus-visible:outline-2 focus-visible:outline-offset-2 justify-normal rounded p-0! gap-1.5 text-white hover:text-white/80"
-                    href={item.href}
-                  >
-                    <span className="underline decoration-transparent underline-offset-2 hover:decoration-current transition-inherit-all">
-                      {item.label}
-                    </span>
+                  <a href={item.href} className="text-sm text-gray-400 hover:text-white transition">
+                    {item.label}
                   </a>
                 </li>
               ))}
             </ul>
           </nav>
-        </div>
-
-        <div className="mt-12 flex flex-col-reverse justify-between gap-6 border-t border-brand_alt pt-8 md:mt-16 md:flex-row">
-          <p className="text-md text-white">
-            © 2025 SINDESC - Sindicato dos Profissionais de Enfermagem e Saúde de Castanhal. Todos os direitos reservados.
-          </p>
-          <ul className="flex gap-6">
-            {data.socialLinks.twitter && (
-              <li>
-                <a
-                  href={data.socialLinks.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex rounded-xs text-white outline-focus-ring transition duration-100 ease-linear hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 22" fill="none" aria-label="X (formerly Twitter)">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M15.9455 22L10.396 14.0901L3.44886 22H0.509766L9.09209 12.2311L0.509766 0H8.05571L13.286 7.45502L19.8393 0H22.7784L14.5943 9.31648L23.4914 22H15.9455ZM19.2185 19.77H17.2398L4.71811 2.23H6.6971L11.7121 9.25316L12.5793 10.4719L19.2185 19.77Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </a>
-              </li>
-            )}
-            {data.socialLinks.facebook && (
-              <li>
-                <a
-                  href={data.socialLinks.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex rounded-xs text-white outline-focus-ring transition duration-100 ease-linear hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Facebook">
-                    <path
-                      d="M24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 17.9895 4.3882 22.954 10.125 23.8542V15.4688H7.07812V12H10.125V9.35625C10.125 6.34875 11.9166 4.6875 14.6576 4.6875C15.9701 4.6875 17.3438 4.92188 17.3438 4.92188V7.875H15.8306C14.34 7.875 13.875 8.80008 13.875 9.75V12H17.2031L16.6711 15.4688H13.875V23.8542C19.6118 22.954 24 17.9895 24 12Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </a>
-              </li>
-            )}
-            {data.socialLinks.instagram && (
-              <li>
-                <a
-                  href={data.socialLinks.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex rounded-xs text-white outline-focus-ring transition duration-100 ease-linear hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Instagram">
-                    <path
-                      d="M12 2.16094C15.2063 2.16094 15.5859 2.175 16.8469 2.23125C18.6187 2.31563 19.6219 2.70469 20.3156 2.99531C21.2219 3.36563 21.8969 3.80625 22.5938 4.50313C23.2906 5.2 23.7313 5.875 24.1016 6.78125C24.3922 7.475 24.7812 8.47813 24.8656 10.25C24.9219 11.5109 24.9359 11.8906 24.9359 15.0969C24.9359 18.3031 24.9219 18.6828 24.8656 19.9438C24.7812 21.7156 24.3922 22.7188 24.1016 23.4125C23.7313 24.3188 23.2906 24.9938 22.5938 25.6906C21.8969 26.3875 21.2219 26.8281 20.3156 27.1984C19.6219 27.4891 18.6187 27.8781 16.8469 27.9625C15.5859 28.0188 15.2063 28.0328 12 28.0328C8.79375 28.0328 8.41406 28.0188 7.15313 27.9625C5.38125 27.8781 4.37813 27.4891 3.68438 27.1984C2.77813 26.8281 2.10313 26.3875 1.40625 25.6906C0.709375 24.9938 0.26875 24.3188 -0.101562 23.4125C-0.392187 22.7188 -0.78125 21.7156 -0.865625 19.9438C-0.921875 18.6828 -0.935937 18.3031 -0.935937 15.0969C-0.935937 11.8906 -0.921875 11.5109 -0.865625 10.25C-0.78125 8.47813 -0.392187 7.475 -0.101562 6.78125C0.26875 5.875 0.709375 5.2 1.40625 4.50313C2.10313 3.80625 2.77813 3.36563 3.68438 2.99531C4.37813 2.70469 5.38125 2.31563 7.15313 2.23125C8.41406 2.175 8.79375 2.16094 12 2.16094ZM12 0C8.74219 0 8.33437 0.0140625 7.05469 0.0703125C5.775 0.126563 4.90313 0.52500 4.14375 1.00781C3.35156 1.49063 2.68125 2.08594 2.01094 2.75625C1.34063 3.42656 0.745312 4.09687 0.2625 4.88906C-0.220313 5.64844 -0.618750 6.52031 -0.675000 7.8C-0.731250 9.07969 -0.745312 9.48750 -0.745312 12.7453C-0.745312 16.0031 -0.731250 16.4109 -0.675000 17.6906C-0.618750 18.9703 -0.220313 19.8422 0.2625 20.6016C0.745312 21.3938 1.34063 22.0641 2.01094 22.7344C2.68125 23.4047 3.35156 23.9906 4.14375 24.4828C4.90313 24.9656 5.775 25.3641 7.05469 25.4203C8.33437 25.4766 8.74219 25.4906 12 25.4906C15.2578 25.4906 15.6656 25.4766 16.9453 25.4203C18.225 25.3641 19.0969 24.9656 19.8562 24.4828C20.6484 23.9906 21.3187 23.4047 21.9891 22.7344C22.6594 22.0641 23.2453 21.3938 23.7375 20.6016C24.2203 19.8422 24.6187 18.9703 24.675 17.6906C24.7312 16.4109 24.7453 16.0031 24.7453 12.7453C24.7453 9.48750 24.7312 9.07969 24.675 7.8C24.6187 6.52031 24.2203 5.64844 23.7375 4.88906C23.2547 4.09687 22.6594 3.42656 21.9891 2.75625C21.3187 2.08594 20.6484 1.5 19.8562 1.00781C19.0969 0.525 18.225 0.126562 16.9453 0.0703125C15.6656 0.0140625 15.2578 0 12 0Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M12 6.35156C8.59688 6.35156 5.85938 9.08906 5.85938 12.4922C5.85938 15.8953 8.59688 18.6328 12 18.6328C15.4031 18.6328 18.1406 15.8953 18.1406 12.4922C18.1406 9.08906 15.4031 6.35156 12 6.35156ZM12 16.4734C9.79219 16.4734 8.01875 14.7 8.01875 12.4922C8.01875 10.2844 9.79219 8.51094 12 8.51094C14.2078 8.51094 15.9812 10.2844 15.9812 12.4922C15.9812 14.7 14.2078 16.4734 12 16.4734Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M19.8469 6.10781C19.8469 6.96563 19.1531 7.65938 18.2953 7.65938C17.4375 7.65938 16.7437 6.96563 16.7437 6.10781C16.7437 5.25 17.4375 4.55625 18.2953 4.55625C19.1531 4.55625 19.8469 5.25 19.8469 6.10781Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </a>
-              </li>
-            )}
-            {data.socialLinks.youtube && (
-              <li>
-                <a
-                  href={data.socialLinks.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex rounded-xs text-white outline-focus-ring transition duration-100 ease-linear hover:text-white/80 focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="YouTube">
-                    <path
-                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </a>
-              </li>
-            )}
-          </ul>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3">
+              {data.logo ? (
+                <img src={data.logo.url} alt={data.logo.alt} className="h-8 w-auto" />
+              ) : (
+                <Image src="/logo.svg" alt="Logo" width={32} height={32} />
+              )}
+              <span className="text-xs text-gray-500">© {new Date().getFullYear()} SINDESC. Todos os direitos reservados.</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
